@@ -1,11 +1,14 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
       $(document).ready(function(){
-        $('.conteudo-estado').hide();
         $('.estado').click(function(e){
             e.preventDefault();
+            
+            /* Obtem a sigla do estado */
             var estado = $(this).attr('xlink:href').toLowerCase();
             
+            /* Carrega o conteúdo da página corespondente ao estado */
             $("#conteudo-estado").load("/"+estado+"/ #main", function() {
                 /* Carrega imagens de alta resolução para o webnode */
                 $("#conteudo-estado img").each(function() {
@@ -15,8 +18,6 @@
                 });
             });
             
-            
-    
             /* Remove classe de estado selecionado de todos os estados */        
             $(".estado").each(function() {
                 $(this).attr("class", $(this).attr('class').replace('selected',''));	
@@ -24,18 +25,17 @@
 
             /* Adiciona classe de estado selecionado no estado clicado */
             $(this).attr("class", $(this).attr('class').replace('selected','') +' selected'); 
-
             
             return false;
         });
       });
   </script>
 <style>
-    #svg-map path { fill:green }
     #svg-map text { fill:#fff; font:12px Arial-BoldMT, sans-serif; cursor:pointer }
     #svg-map a{ text-decoration:none }
     #svg-map a:hover { cursor:pointer; text-decoration:none }
-    #svg-map .circle { fill:#66ccff }
+
+    /* Preenche a cor de cada estado */
     #svg-map .go path, #svg-map .go path .circle { fill:#ffd42a }
     #svg-map .df path, #svg-map .df path .circle { fill:#f8c300 }
     #svg-map .ac path, #svg-map .ac path .circle { fill:#b8da6b }
@@ -64,11 +64,15 @@
     #svg-map .al path, #svg-map .al path .circle { fill:#ffa600 }
     #svg-map .se path, #svg-map .se path .circle { fill:#ff9900 }
     
+    /* Define as cores de quando o mouse apota o estado e do estado selecionado */
     #svg-map a:hover path, #svg-map a:hover path .circle { fill:#999999 !important}
     #svg-map a.selected path, #svg-map a.selected path .circle { fill:#333333 }
     
+
+    
     .mapa-container { text-align:center }
     
+    /* Muda o tamanho do mapa para telas pequenas */
     @media (max-width: 450px) 
     {
       #svg-map {
@@ -79,6 +83,7 @@
 <div class="container mapa-container">
         <div>
 
+            <!-- Definição em SVG da imagem do mapa !-->
             <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enable-background="new 0 0 450 460" xml:space="preserve">
                 <g>
                   <a xlink:href="to" class="estado to norte">
@@ -394,4 +399,6 @@
     </svg>
   </div>
 </div>
+
+<!-- Nesta div será carregado o conteúdo do estado clicado !-->
 <div id="conteudo-estado"></div>
